@@ -7,7 +7,7 @@ if (!MONGO_URI) {
     throw new Error("MONGO_URI is not defined in the environment variables.");
 }
 
-export const connect = async () => {
+export const connectToDb = async () => {
     const connectionState = mongoose.connection.readyState;
 
     // 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
@@ -19,9 +19,6 @@ export const connect = async () => {
     try {
         await mongoose.connect(MONGO_URI, {
             dbName: "Blog_01_DB",
-            bufferCommands: false,
-            useNewUrlParser: true, // Optional but recommended for better error handling
-            useUnifiedTopology: true, // Optional but recommended for better error handling
         });
         // console.log("Connected Successfully");
     } catch (error) {
