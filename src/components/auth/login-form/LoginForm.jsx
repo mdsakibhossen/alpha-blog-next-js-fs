@@ -1,12 +1,69 @@
 "use client";
+import AlertMessage from "@/components/alert-message/AlertMessage";
+import { signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const LoginForm = () => {
   const [showPass, setShowPass] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState({ text: "", isSucceed: true });
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+
+    const submitHandler = async (e) => {
+      e.preventDefault();
+      const email = e.target[0].value.trim();
+      const password = e.target[1].value.trim();
+      if (!email || !password) {
+        setMessage({
+          text: "Please Filed All The Fileds...",
+          isSucceed: false,
+        });
+        return;
+      }
+
+      try {
+        setIsLoading(true);
+        const res = await signIn("credentials", {
+          redirect: false,
+          email,
+          password,
+        });
+
+        // console.log(res,"RES");
+        
+        if (res.ok) {
+          setMessage({
+            // text: data.message,
+            text: "",
+            isSucceed: true,
+          });
+          setIsLoading(false);
+          router.push(callbackUrl);
+        } else {
+          setMessage({
+            text: res?.error,
+            isSucceed: false,
+          });
+          setIsLoading(false);
+        }
+      } catch (error) {
+        setMessage({
+          text: error.message || "Something went wrong...",
+          isSucceed: false,
+        });
+        setIsLoading(false);
+      }
+    };
   return (
     <div className="sign-up-form max-w-[600px] mx-auto">
-      <form action="" className="flex flex-col gap-3">
+      <div className="mb-2">
+        <AlertMessage message={message} />
+      </div>
+      <form onSubmit={submitHandler} className="flex flex-col gap-3">
         <div className="flex flex-col gap-1">
           <label htmlFor="email">Email: </label>
           <input
@@ -46,8 +103,13 @@ const LoginForm = () => {
           </div>
         </div>
         <div className="btn-box mt-3 text-center">
-          <button className="bg-green-400 transition-all duration-300 hover:bg-green-500 active:bg-green-600 px-8 py-2.5 rounded text-white">
-            Login
+          <button
+            disabled={isLoading}
+            className={`bg-green-400 transition-all duration-300 hover:bg-green-500 active:bg-green-600 px-8 py-2.5 rounded text-white ${
+              isLoading ? "cursor-not-allowed" : ""
+            }`}
+          >
+            {isLoading ? "Loading..." : "Login"}
           </button>
         </div>
       </form>

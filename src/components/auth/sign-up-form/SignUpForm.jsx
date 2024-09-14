@@ -40,7 +40,6 @@ const SignUpForm = () => {
         setIsLoading(false);
         router.push("/login");
       } else {
-        // TODO: Set Error Message
         setMessage({
           text: data.message,
           isSucceed: false,
@@ -110,7 +109,12 @@ const SignUpForm = () => {
           </div>
         </div>
         <div className="btn-box mt-3 text-center">
-          <button className="bg-green-400 transition-all duration-300 hover:bg-green-500 active:bg-green-600 px-8 py-2.5 rounded text-white">
+          <button
+            disabled={isLoading}
+            className={`bg-green-400 transition-all duration-300 hover:bg-green-500 active:bg-green-600 px-8 py-2.5 rounded text-white ${
+              isLoading ? "cursor-not-allowed" : ""
+            }`}
+          >
             {isLoading ? "Loading..." : "Sign Up"}
           </button>
         </div>

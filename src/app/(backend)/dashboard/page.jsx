@@ -1,7 +1,11 @@
+import LogoutButton from "@/components/logout-button/LogoutButton"
 
 const DashboardPage = () => {
   return (
-    <div>DashboardPage</div>
+    <div>DashboardPage
+
+      <LogoutButton/>
+    </div>
   )
 }
 
