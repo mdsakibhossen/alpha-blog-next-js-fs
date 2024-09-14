@@ -1,6 +1,6 @@
 "use client";
 import AlertMessage from "@/components/alert-message/AlertMessage";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
@@ -12,52 +12,57 @@ const LoginForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  const { status } = useSession();
 
-    const submitHandler = async (e) => {
-      e.preventDefault();
-      const email = e.target[0].value.trim();
-      const password = e.target[1].value.trim();
-      if (!email || !password) {
+  if (status === "authenticated") {
+    router.push(callbackUrl);
+  }
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const email = e.target[0].value.trim();
+    const password = e.target[1].value.trim();
+    if (!email || !password) {
+      setMessage({
+        text: "Please Filed All The Fileds...",
+        isSucceed: false,
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const res = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+
+      // console.log(res,"RES");
+
+      if (res.ok) {
         setMessage({
-          text: "Please Filed All The Fileds...",
-          isSucceed: false,
+          // text: data.message,
+          text: "",
+          isSucceed: true,
         });
-        return;
-      }
-
-      try {
-        setIsLoading(true);
-        const res = await signIn("credentials", {
-          redirect: false,
-          email,
-          password,
-        });
-
-        // console.log(res,"RES");
-        
-        if (res.ok) {
-          setMessage({
-            // text: data.message,
-            text: "",
-            isSucceed: true,
-          });
-          setIsLoading(false);
-          router.push(callbackUrl);
-        } else {
-          setMessage({
-            text: res?.error,
-            isSucceed: false,
-          });
-          setIsLoading(false);
-        }
-      } catch (error) {
+        setIsLoading(false);
+        router.push(callbackUrl);
+      } else {
         setMessage({
-          text: error.message || "Something went wrong...",
+          text: res?.error,
           isSucceed: false,
         });
         setIsLoading(false);
       }
-    };
+    } catch (error) {
+      setMessage({
+        text: error.message || "Something went wrong...",
+        isSucceed: false,
+      });
+      setIsLoading(false);
+    }
+  };
   return (
     <div className="sign-up-form max-w-[600px] mx-auto">
       <div className="mb-2">

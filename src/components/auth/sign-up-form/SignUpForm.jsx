@@ -1,5 +1,6 @@
 "use client";
 import AlertMessage from "@/components/alert-message/AlertMessage";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
@@ -9,6 +10,11 @@ const SignUpForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", isSucceed: true });
   const router = useRouter();
+  const { status } = useSession();
+
+  if (status === "authenticated") {
+    router.push(callbackUrl);
+  }
 
   const submitHandler = async (e) => {
     e.preventDefault();
