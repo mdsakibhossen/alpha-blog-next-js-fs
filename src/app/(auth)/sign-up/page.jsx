@@ -12,7 +12,7 @@ const SignUpPage = () => {
         <div className="heading flex flex-col justify-center items-center gap-2 mb-5">
           <h1 className="text-3xl">Sign Up</h1>
           <p className="text-gray-500 flex gap-1">
-            <span>Already hav an account?</span>
+            <span>Already have an account?</span>
             <Link
               href={"/login"}
               className="underline text-gray-800 hover:text-green-400"
