@@ -14,7 +14,7 @@ export default withAuth(
         const url = req.nextUrl.pathname;
         const isAdmin = req?.nextauth?.token?.user?.isAdmin;
 
-        if (url?.includes("/admin") && isAdmin) {
+        if (url?.includes("/admin") && !isAdmin) {
             return NextResponse.redirect(new URL("/", req.url));
         }
     },
