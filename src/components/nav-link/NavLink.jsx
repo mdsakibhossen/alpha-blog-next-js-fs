@@ -16,7 +16,7 @@ const NavLink = ({ href, children, isHorizontal = true }) => {
   ) : (
     <Link
       href={href}
-      className={`w-full text-center  py-2 rounded transition-all duration-300 hover:bg-green-400 hover:text-white ${
+      className={`w-full block text-center  py-2 rounded transition-all duration-300 hover:bg-green-400 hover:text-white ${
         pathname === href ? "bg-green-400 text-white" : ""
       }`}
     >

@@ -13,8 +13,10 @@ export default withAuth(
     async function middleware(req) {
         const url = req.nextUrl.pathname;
         const isAdmin = req?.nextauth?.token?.user?.isAdmin;
+        // console.log(isAdmin,"Admin");
+        
 
-        if (url?.includes("/admin") && isAdmin) {
+        if (url?.includes("/admin") && !isAdmin) {
             return NextResponse.redirect(new URL("/", req.url));
         }
     },
