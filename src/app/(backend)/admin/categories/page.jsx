@@ -1,3 +1,4 @@
+import CategoryList from "@/components/backend/category-list/CategoryList";
 import Link from "next/link";
 
 export const metadata = {
@@ -12,20 +13,14 @@ const CategoriesPage = () => {
         <div className="heading p-3">
           <h1 className="text-2xl text-center uppercase">Categories</h1>
         </div>
-        <div className="table-wrapper max-w-[1000px] mx-auto">
-          <table className="border border-collapse text-center w-full">
-            <thead>
-              <tr>
-                <th className="border font-medium">Title</th>
-                <th className="border font-medium">Slug</th>
-                <th className="border font-medium">Icon</th>
-                <th className="border font-medium" colSpan={2}>Action</th>
-              </tr>
-            </thead>
-          </table>
-        </div>
+        <CategoryList />
         <div className="btn-box text-center mt-10">
-          <Link href={"/admin/add-category"} className="py-2.5 px-8 bg-blue-500 text-white rounded">Add Category</Link>
+          <Link
+            href={"/admin/add-category"}
+            className="py-2.5 px-8 bg-blue-500 text-white rounded"
+          >
+            Add Category
+          </Link>
         </div>
       </div>
     </section>

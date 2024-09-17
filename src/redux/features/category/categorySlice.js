@@ -2,34 +2,36 @@
 import { createSlice } from '@reduxjs/toolkit';
 // TODO: Make it Category Slice
 const initialState = {
-    user: {
-        username: "",
-        email: "",
-        password: ""
-    },
-    editMode: false,
-    editableUserId: ""
+    title: "",
+    slug: "",
 };
 
-const userSlice = createSlice({
-    name: 'user',
+const categorySlice = createSlice({
+    name: 'category',
     initialState,
     reducers: {
-        changeInput(state, action) {
+        setCategory(state, action) {
             const { property, value } = action.payload;
-            state.user[property] = value;
+            state[property] = value;
+
+            if (property === "title") {
+                state.slug = value.toLowerCase().replaceAll(" ", "-");
+            }
         },
-        editUser(state, action) {
-            const { _id, username, email, password } = action.payload;
-            state.editMode = true;
-            state.editableUserId = _id;
-            state.user = { username, email, password };
+        setSlugOnChangeTitle(state, action) {
+
         },
+        // editUser(state, action) {
+        //     const { _id, username, email, password } = action.payload;
+        //     state.editMode = true;
+        //     state.editableUserId = _id;
+        //     state.user = { username, email, password };
+        // },
         resetForm() {
             return initialState;
         }
     },
 });
 
-export const { changeInput, editUser, resetForm } = userSlice.actions;
-export const userReducer = userSlice.reducer;
+export const { setCategory, resetForm } = categorySlice.actions;
+export const categoryReducer = categorySlice.reducer;

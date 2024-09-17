@@ -2,19 +2,19 @@ import { rootApi } from "../apiSlice";
 
 export const categoryApi = rootApi.injectEndpoints({
     endpoints: (builder) => ({
-        // getAllProducts: builder.query({
-        //     query: () => `products`,
-        //     providesTags: ["products"],
-        // }),
+        getAllCategories: builder.query({
+            query: () => `/categories`,
+            providesTags: ["category"],
+        }),
 
-        // createProduct: builder.mutation({
-        //     query: (product) => ({
-        //         url: `products`,
-        //         method: "POST",
-        //         body: product,
-        //     }),
-        //     invalidatesTags: ["products"],
-        // }),
+        addCategory: builder.mutation({
+            query: (category) => ({
+                url: `/categories`,
+                method: "POST",
+                body: category,
+            }),
+            invalidatesTags: ["category"],
+        }),
 
         // removeProduct: builder.mutation({
         //     query: (prodId) => ({
@@ -27,4 +27,4 @@ export const categoryApi = rootApi.injectEndpoints({
     }),
 });
 
-export const { } = categoryApi;
+export const { useGetAllCategoriesQuery, useAddCategoryMutation } = categoryApi;
