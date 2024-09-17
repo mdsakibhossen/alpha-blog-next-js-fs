@@ -2,6 +2,20 @@ import { connectToDb } from "@/lib/connectToDb";
 import { Category } from "@/models/category";
 import { NextResponse } from "next/server";
 
+// GET request to fetch all categories
+export const GET = async (request) => {
+    try {
+        await connectToDb();
+        const categories = await Category.find();
+        // console.log("Categories",categories);
+        
+        return NextResponse.json(categories, { status: 200 });
+    } catch (error) {
+        // console.error("Error fetching categories:", error);
+        return NextResponse.json({ message: "Failed to fetch categories", error: error.message }, { status: 500 });
+    }
+};
+
 export const POST = async (request) => {
     await connectToDb();
     const { title, slug, icon } = await request.json();

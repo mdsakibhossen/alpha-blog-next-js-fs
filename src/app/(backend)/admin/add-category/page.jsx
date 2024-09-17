@@ -1,4 +1,4 @@
-import CategoryForm from "@/components/backend/category-form/CategoryForm";
+import AddCategoryForm from "@/components/backend/add-category-form/AddCategoryForm";
 
 export const metadata = {
   title: "Add Category | AlphaBlog",
@@ -13,7 +13,7 @@ const AddCategoryPage = () => {
           <h1 className="text-2xl text-center uppercase">Add Category</h1>
         </div>
         {/* Category Form */}
-        <CategoryForm />
+        <AddCategoryForm />
       </div>
     </section>
   );

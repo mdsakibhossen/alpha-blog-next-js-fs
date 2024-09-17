@@ -1,85 +1,70 @@
 "use client";
 import AlertMessage from "@/components/alert-message/AlertMessage";
 import { useCloudinary } from "@/hooks/useCloudinary";
-import { resetForm, setCategory } from "@/redux/features/category/categorySlice";
-import { useAddCategoryMutation } from "@/redux/services/category/categoryApi";
+import { setCategory } from "@/redux/features/category/categorySlice";
+import {
+  useEditCategoryMutation,
+  useGetCategoryQuery,
+} from "@/redux/services/category/categoryApi";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 
-const CategoryForm = () => {
-  const { image, uploadImage, removeImage, isUploading, isRemoving } =
+const EditCategoryForm = ({ id }) => {
+  const { data } = useGetCategoryQuery(id);
+  const { image, setImage, uploadImage, removeImage, isUploading, isRemoving } =
     useCloudinary();
   const [message, setMessage] = useState({ text: "", isSucceed: true });
+  const router = useRouter();
   const dispatch = useDispatch();
   const categoryStates = useSelector((storeStates) => storeStates.category);
   const { title, slug } = categoryStates;
 
+  useEffect(() => {
+    if (data?.category) {
+      dispatch(setCategory({ property: "title", value: data.category.title }));
+      dispatch(setCategory({ property: "slug", value: data.category.slug }));
+      setImage(data.category.icon); // Set the image only when data is available
+    }
+  }, [data, dispatch]);
+
   const [
-    addCategory,
+    editCategory,
     {
-      data: addMessage,
-      isError: isAddError,
-      isLoading: isAddLoading,
-      isSuccess: isAddSuccess,
-      error: addError,
+      data: editMessage,
+      isError: isEditError,
+      isLoading: isEditLoading,
+      isSuccess: isEditSuccess,
+      error: editError,
     },
-  ] = useAddCategoryMutation();
+  ] = useEditCategoryMutation();
 
   const changeHandler = (e) => {
-    dispatch(
-      setCategory({ property: e.target.name, value: e.target.value, image })
-    );
+    dispatch(setCategory({ property: e.target.name, value: e.target.value }));
   };
   // console.log(categoryStates, "CategoryStates");
 
   // Handle messages based on RTK Query states
   useEffect(() => {
-    if (isAddSuccess) {
+    if (isEditSuccess) {
       setMessage({
-        text: addMessage?.message || "Successfully Added...",
+        text: editMessage?.message || "Successfully Updated...",
         isSucceed: true,
       });
-      dispatch(resetForm());
-    } else if (isAddError) {
-      // console.log("addError?.data?.message:", addError?.data?.message);
+      router.push("/admin/categories");
+    } else if (isEditError) {
       setMessage({
-        text: addError?.data?.message || "Failed To Add...",
+        text: editError?.data?.message || "Failed To Update...", // getting this error ?
         isSucceed: false,
       });
     }
-
-    // if (updateIsSuccess) {
-    //   setMessage({
-    //     text: updateMessage?.message || "Successfully Updated...",
-    //     isErr: false,
-    //     isDelete: false,
-    //   });
-    //   dispatch(resetForm());
-    // } else if (updateIsError) {
-    //   setMessage({
-    //     text: updateError?.data?.message || "Failed To Update...",
-    //     isErr: true,
-    //     isDelete: false,
-    //   });
-    // }
-  }, [
-    isAddSuccess,
-    isAddError,
-    // updateIsSuccess,
-    // updateIsError,
-    addError,
-    // updateError,
-    dispatch,
-  ]);
+  }, [isEditSuccess, isEditError, editError, dispatch]);
 
   // Submit handler
   const submitHandler = async (e) => {
     e.preventDefault();
-
-    console.log(title,slug,image, "Inputvalue");
-    
 
     if (!title || !slug || !image) {
       setMessage({
@@ -89,11 +74,8 @@ const CategoryForm = () => {
       return;
     }
 
-    const newCategory = { title, slug, icon:image };
-    await addCategory(newCategory);
-    // editMode
-    //   ? await updateUser({ id: editableUserId, user: newUser })
-    //   : await addUser(newUser);
+    const updatedCategory = { title, slug, icon: image };
+    await editCategory({ id: data?.category._id, category: updatedCategory });
   };
   return (
     <div className="category-form max-w-[600px] mx-auto">
@@ -105,7 +87,7 @@ const CategoryForm = () => {
           <label htmlFor="title">Title: </label>
           <input
             onChange={changeHandler}
-            value={title && title}
+            value={title}
             type="text"
             name="title"
             id="title"
@@ -117,7 +99,7 @@ const CategoryForm = () => {
           <label htmlFor="slug">Slug: </label>
           <input
             onChange={changeHandler}
-            value={slug && slug}
+            value={slug}
             type="text"
             name="slug"
             id="slug"
@@ -144,6 +126,7 @@ const CategoryForm = () => {
                 width={200}
                 height={200}
                 className="w-full h-full object-cover"
+                priority
               />
             </div>
           ) : (
@@ -162,18 +145,17 @@ const CategoryForm = () => {
         </div>
 
         <div className="btn-box mt-3 text-center">
-          {/* <button
-            className={`bg-blue-400 transition-all duration-300 hover:bg-blue-500 active:bg-blue-600 px-8 py-2.5 rounded text-white`}
-          >
-            Add
-          </button> */}
           <button
-            disabled={isUploading || isAddLoading}
-            className={`bg-blue-400 transition-all duration-300 hover:bg-blue-500 active:bg-blue-600 px-8 py-2.5 rounded text-white ${
-              isUploading || isAddLoading ? "cursor-not-allowed" : ""
+            disabled={isUploading || isEditLoading}
+            className={`bg-green-400 transition-all duration-300 hover:bg-green-500 active:bg-green-600 px-8 py-2.5 rounded text-white ${
+              isUploading || isEditLoading ? "cursor-not-allowed" : ""
             }`}
           >
-            {isUploading ? "Uploading Image..." : isAddLoading ? "Loading..." : "Add"}
+            {isUploading
+              ? "Uploading Image..."
+              : isEditLoading
+              ? "Loading..."
+              : "Update"}
           </button>
         </div>
       </form>
@@ -181,4 +163,4 @@ const CategoryForm = () => {
   );
 };
 
-export default CategoryForm;
+export default EditCategoryForm;

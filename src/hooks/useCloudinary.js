@@ -58,5 +58,5 @@ export const useCloudinary = () => {
         });
     };
 
-    return { image, uploadImage, removeImage, isUploading,isRemoving }
+    return { image, setImage, uploadImage, removeImage, isUploading, isRemoving }
 }

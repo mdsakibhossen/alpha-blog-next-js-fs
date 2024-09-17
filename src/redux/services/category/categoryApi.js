@@ -6,6 +6,10 @@ export const categoryApi = rootApi.injectEndpoints({
             query: () => `/categories`,
             providesTags: ["category"],
         }),
+        getCategory: builder.query({
+            query: (id) => `/categories/${id}`,
+            providesTags: ["category"],
+        }),
 
         addCategory: builder.mutation({
             query: (category) => ({
@@ -15,16 +19,26 @@ export const categoryApi = rootApi.injectEndpoints({
             }),
             invalidatesTags: ["category"],
         }),
+        editCategory: builder.mutation({
+            query: ({ id, category }) => (
+                {
+                    url: `/categories/${id}`,
+                    method: "PUT",
+                    body: category // Don't need to stringify. Because RTK Query Done The Job Underhood... 
+                }
+            ),
+            invalidatesTags: ["category"]
+        }),
 
-        // removeProduct: builder.mutation({
-        //     query: (prodId) => ({
-        //         url: `products/${prodId}`,
-        //         method: "DELETE",
-        //     }),
-        //     invalidatesTags: ["products"],
-        // }),
+        deleteCategory: builder.mutation({
+            query: (id) => ({
+                url: `categories/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["category"],
+        }),
 
     }),
 });
 
-export const { useGetAllCategoriesQuery, useAddCategoryMutation } = categoryApi;
+export const { useGetAllCategoriesQuery, useGetCategoryQuery, useAddCategoryMutation, useEditCategoryMutation, useDeleteCategoryMutation } = categoryApi;
