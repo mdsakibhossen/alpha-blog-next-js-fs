@@ -41,7 +41,10 @@ const AddCategoryForm = () => {
         text: addMessage?.message || "Successfully Added...",
         isSucceed: true,
       });
-      router.push("/admin/categories");
+      // router.push("/admin/categories");
+      setTimeout(() => {
+        router.push("/admin/categories");
+      }, 1000); // A slight delay before navigating
     } else if (isAddError) {
       // console.log("addError?.data?.message:", addError?.data?.message);
       setMessage({

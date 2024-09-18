@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export const GET = async (request) => {
     try {
         await connectToDb();
-        const categories = await Category.find();
+        const categories = await Category.find().sort({ createdAt: -1 });
         // console.log("Categories",categories);
         
         return NextResponse.json(categories, { status: 200 });

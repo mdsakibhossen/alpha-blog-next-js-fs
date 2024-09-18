@@ -53,7 +53,10 @@ const EditCategoryForm = ({ id }) => {
         text: editMessage?.message || "Successfully Updated...",
         isSucceed: true,
       });
-      router.push("/admin/categories");
+      // router.push("/admin/categories");
+      setTimeout(() => {
+        router.push("/admin/categories");
+      }, 1000); // A slight delay before navigating
     } else if (isEditError) {
       setMessage({
         text: editError?.data?.message || "Failed To Update...", // getting this error ?
