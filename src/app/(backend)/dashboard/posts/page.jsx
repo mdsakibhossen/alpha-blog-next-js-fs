@@ -13,7 +13,7 @@ const PostsPage = () => {
         <div className="heading p-3">
           <h1 className="text-2xl text-center uppercase">Posts</h1>
         </div>
-        {/* <PostList /> Component for rendering posts */}
+        <PostList /> 
         <div className="btn-box text-center mt-10">
           <Link
             href={"/dashboard/add-post"}

@@ -3,14 +3,13 @@ import { rootApi } from "../apiSlice";
 export const postApi = rootApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllPosts: builder.query({
-            query: ({ page = 1, limit = 2 }) => `/posts?page=${page}&limit=${limit}`, // pagination support
+            query: ({ page = 1, limit = 2 } = {}) => `/posts?page=${page}&limit=${limit}`, // pagination support
             providesTags: ["post"],
         }),
         getPost: builder.query({
             query: (id) => `/posts/${id}`,
             providesTags: ["post"],
         }),
-
         addPost: builder.mutation({
             query: (post) => ({
                 url: `/posts`,
@@ -19,7 +18,6 @@ export const postApi = rootApi.injectEndpoints({
             }),
             invalidatesTags: ["post"],
         }),
-
         editPost: builder.mutation({
             query: ({ id, post }) => ({
                 url: `/posts/${id}`,
@@ -28,7 +26,6 @@ export const postApi = rootApi.injectEndpoints({
             }),
             invalidatesTags: ["post"],
         }),
-
         deletePost: builder.mutation({
             query: (id) => ({
                 url: `/posts/${id}`,
