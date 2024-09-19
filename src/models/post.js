@@ -43,7 +43,7 @@ const postSchema = new mongoose.Schema(
             ref: "User",
             required: true,
         },
-        iseFeatured: {
+        isFeatured: {
             type: Boolean,
             default: false
         }

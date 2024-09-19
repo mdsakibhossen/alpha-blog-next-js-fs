@@ -10,9 +10,9 @@ export const GET = async (request) => {
         // Get query parameters for category, page, and limit
         const { searchParams } = new URL(request.url);
         const category = searchParams.get("category"); // Get category from query
-        const user = searchParams.get("user"); // Get category from query
+        const user = searchParams.get("user"); // Get user from query
         const page = parseInt(searchParams.get("page")) || 1; // Default to page 1
-        const limit = parseInt(searchParams.get("limit")) || 10; // Default limit of 10 posts per page
+        const limit = parseInt(searchParams.get("limit")) || 2; // Default limit of 2 posts per page
 
         // Calculate skip value for pagination
         const skip = (page - 1) * limit;
