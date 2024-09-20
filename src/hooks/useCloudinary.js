@@ -22,7 +22,7 @@ export const useCloudinary = () => {
                     0,
                     (uri) => {
                         fetch(
-                            `/api/admin/upload/image`,
+                            `/api/upload/image`,
                             {
                                 method: "POST",
                                 body: JSON.stringify({ image: uri }),
@@ -43,7 +43,7 @@ export const useCloudinary = () => {
     };
     const removeImage = (public_id) => {
         setIsRemoving(true);
-        fetch(`/api/admin/upload/image`, {
+        fetch(`/api/upload/image`, {
             method: "DELETE",
             body: JSON.stringify({ public_id }),
             headers: {
