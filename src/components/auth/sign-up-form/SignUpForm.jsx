@@ -12,9 +12,11 @@ const SignUpForm = () => {
   const router = useRouter();
   const { status } = useSession();
 
-  if (status === "authenticated") {
-    router.push(callbackUrl);
-  }
+   useEffect(() => {
+     if (status === "authenticated") {
+       router.push(callbackUrl);
+     }
+   }, [status, router, callbackUrl]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
