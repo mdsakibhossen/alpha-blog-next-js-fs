@@ -2,7 +2,7 @@
 import AlertMessage from "@/components/alert-message/AlertMessage";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const SignUpForm = () => {
