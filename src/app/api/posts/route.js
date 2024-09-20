@@ -1,42 +1,46 @@
 import { connectToDb } from "@/lib/connectToDb";
 import { Post } from "@/models/post";
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/authOptions";
 
 // GET request to fetch all posts
 export const GET = async (request) => {
     try {
         await connectToDb();
+        const session = await getServerSession(authOptions);
 
-        // Get query parameters for category, page, and limit
+        if (!session) {
+            return NextResponse.json(
+                { message: "Unauthorized" },
+                { status: 401 }
+            );
+        }
+
         const { searchParams } = new URL(request.url);
-        const category = searchParams.get("category"); // Get category from query
-        const user = searchParams.get("user"); // Get user from query
-        const page = parseInt(searchParams.get("page")) || 1; // Default to page 1
-        const limit = parseInt(searchParams.get("limit")) || 2; // Default limit of 2 posts per page
-
-        // Calculate skip value for pagination
+        const fetchAll = searchParams.get("fetchAll") === "true";
+        const category = searchParams.get("category");
+        const page = parseInt(searchParams.get("page")) || 1;
+        const limit = fetchAll ? 0 : parseInt(searchParams.get("limit")) || 2;
         const skip = (page - 1) * limit;
 
-        // Create a filter object for category if it's provided
         let filter = {};
         if (category) {
             filter.category = category;
         }
-        if (user) {
-            filter.user = user;
+
+        if (!session.user.isAdmin) {
+            filter.user = session.user._id;
         }
 
-        // Fetch posts with pagination and filtering by category
         const posts = await Post.find(filter)
-            .sort({ createdAt: -1 })  // Sort by createdAt in descending order
+            .sort({ createdAt: -1 })
             .skip(skip)
             .limit(limit);
 
-        // Get total number of posts for pagination info, with the same filter
         const totalPosts = await Post.countDocuments(filter);
-        const totalPages = Math.ceil(totalPosts / limit);
+        const totalPages = limit > 0 ? Math.ceil(totalPosts / limit) : 1;
 
-        // Return the posts along with pagination details
         return NextResponse.json(
             {
                 posts,
@@ -53,6 +57,7 @@ export const GET = async (request) => {
         );
     }
 };
+
 
 export const POST = async (request) => {
     await connectToDb();

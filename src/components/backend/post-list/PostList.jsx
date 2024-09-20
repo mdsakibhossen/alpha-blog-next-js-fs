@@ -8,14 +8,11 @@ import PostItem from "./post-item/PostItem";
 import AlertMessage from "@/components/alert-message/AlertMessage";
 import { useEffect, useState } from "react";
 import { useCloudinary } from "@/hooks/useCloudinary";
-import { useSession } from "next-auth/react";
 import Pagination from "@/components/pagination/Pagination";
 
 const PostList = () => {
-  const { data: session } = useSession();
   const [message, setMessage] = useState({ text: "", isSucceed: true });
   const { removeImage } = useCloudinary();
-  const [allPosts, setAllPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Add state for currentPage
 
   // Fetch all posts using RTK Query with pagination
@@ -35,21 +32,6 @@ const PostList = () => {
       isError: isDeleteError,
     },
   ] = useDeletePostMutation();
-
-  // Filter posts based on user session
-  useEffect(() => {
-    if (session?.user && posts.length > 0) {
-      if (session?.user?.isAdmin) {
-        setAllPosts(posts); // Admin gets all posts
-      } else {
-        // Normal users only get their posts
-        const filteredPosts = posts.filter(
-          (post) => post.user._id === session?.user?._id
-        );
-        setAllPosts(filteredPosts);
-      }
-    }
-  }, [posts, session]);
 
   // Handle post deletion messages
   useEffect(() => {
@@ -83,7 +65,7 @@ const PostList = () => {
   const handleDeletePost = async (id, public_id) => {
     try {
       if (public_id) {
-        await removeImage(public_id); // Remove image first
+        removeImage(public_id); // Remove image first
       }
       await deletePost(id); // Then delete the post
     } catch (error) {
@@ -102,7 +84,7 @@ const PostList = () => {
         </h2>
       ) : isLoading ? (
         <h2 className="text-xl text-center">Loading ...</h2>
-      ) : allPosts.length > 0 ? (
+      ) : posts.length > 0 ? (
         <>
           <div className="table-wrapper max-w-[1000px] mx-auto mt-3 mb-8">
             <AlertMessage message={message} />
@@ -121,7 +103,7 @@ const PostList = () => {
                 </tr>
               </thead>
               <tbody>
-                {allPosts?.map((post) => (
+                {posts?.map((post) => (
                   <PostItem
                     key={post._id}
                     post={post}
