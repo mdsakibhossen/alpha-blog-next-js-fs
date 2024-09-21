@@ -14,9 +14,9 @@ const SignUpForm = () => {
 
    useEffect(() => {
      if (status === "authenticated") {
-       router.push(callbackUrl);
+       router.push("/dashboard");
      }
-   }, [status, router, callbackUrl]);
+   }, [status, router]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
