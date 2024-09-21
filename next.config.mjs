@@ -8,6 +8,18 @@ const nextConfig = {
                 port: '',
                 // pathname: '/my-bucket/**',
             },
+            {
+                protocol: 'https',
+                hostname: 'videos.pexels.com',
+                port: '',
+                // pathname: '/my-bucket/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'images.pexels.com',
+                port: '',
+                // pathname: '/my-bucket/**',
+            },
         ],
     },
 };
