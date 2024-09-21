@@ -1,10 +1,11 @@
+const { default: Hero } = require("@/components/frontend/hero/Hero");
 
 const HomePage = () => {
   return (
-    <div>
-      HomePage
-    </div>
+    <>
+      <Hero />
+    </>
   );
-}
+};
 
-export default HomePage
+export default HomePage;

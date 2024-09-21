@@ -8,7 +8,7 @@ import { useState } from "react";
 const Header = () => {
     const [isMenuOpened,setIsMenuOpened] = useState(false);
   return (
-    <header className="header w-full sticky top-0 left-0 z-50 border-b border-b-gray-200">
+    <header className="header w-full bg-white sticky top-0 left-0 z-50 border-b border-b-gray-200">
       <div className="container mx-auto px-3 py-5 flex justify-between items-center">
         <Logo />
         <Nav />
