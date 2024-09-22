@@ -34,7 +34,7 @@ const Footer = () => {
         </div>
         <div className="col">
           <div className="card bg-white p-4 rounded">
-            <h3 className="font-medium text-lg text-center" text-center>Weekly Newsletter</h3>
+            <h3 className="font-medium text-lg text-center">Weekly Newsletter</h3>
             <p className="text-slate-300 text-center">Get blog articles and offers via email</p>
             <div className="mt-5">
               <input type="email" className="w-full bg-gray-200 px-3 py-2 focus:outline-green-500 rounded" placeholder="Your Email" />
