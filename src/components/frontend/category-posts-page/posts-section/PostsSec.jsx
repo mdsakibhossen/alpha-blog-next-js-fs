@@ -3,16 +3,22 @@ import Pagination from "@/components/pagination/Pagination";
 import { useGetAllPostsQuery } from "@/redux/services/post/postApi";
 import { useState } from "react";
 import PostCard from "../../post-card/PostCard";
+import { useGetCategoryQuery } from "@/redux/services/category/categoryApi";
 
-const AllPostSec = () => {
+const PostsSec = ({ catSlug }) => {
+  const { data: { category } = {} } = useGetCategoryQuery(catSlug);
   const [currentPage, setCurrentPage] = useState(1); // Add state for currentPage
+//   console.log(category, "Cat");
 
   const {
     data: { posts = [], totalPages = 1 } = {},
     isLoading,
     error,
-  } = useGetAllPostsQuery({ page: currentPage, limit: 8 });
-
+  } = useGetAllPostsQuery({
+    page: currentPage,
+    limit: 8,
+    category: category ? category._id : "",
+  });
 
   // const {
   //   data: { posts = [], totalPages = 1 } = {},
@@ -28,7 +34,7 @@ const AllPostSec = () => {
   };
 
   return (
-    <section className="pb-20">
+    <section className="py-20">
       <div className="container mx-auto px-3 relative">
         <div className="top-bar mb-5 flex justify-between items-center">
           <h2 className="font-semibold text-2xl">All posts</h2>
@@ -66,4 +72,4 @@ const AllPostSec = () => {
   );
 };
 
-export default AllPostSec;
+export default PostsSec;

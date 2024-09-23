@@ -1,6 +1,7 @@
 
 import { connectToDb } from "@/lib/connectToDb";
 import { Category } from "@/models/category";
+import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
 
@@ -10,8 +11,18 @@ export const GET = async (request, { params }) => {
 
     try {
         await connectToDb();
-        const category = await Category.findById(id);
+        // const category = await Category.findById(id);
+        // console.log(id,"ID");
 
+        let category;
+        // Check if the id is a valid ObjectId
+        if (mongoose.Types.ObjectId.isValid(id)) {
+            category = await Category.findOne({ _id: id });
+        } else {
+            category = await Category.findOne({ slug: id });
+        }
+        // console.log(category,"Cat");
+        
         if (!category) {
             return NextResponse.json({ message: "Category not found" }, { status: 404 });
         }

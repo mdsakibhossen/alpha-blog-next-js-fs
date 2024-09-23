@@ -1,5 +1,6 @@
 import { connectToDb } from "@/lib/connectToDb";
 import { Post } from "@/models/post"; // Assuming your Post model is imported here
+import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
 // GET request to fetch a post by ID
@@ -8,8 +9,14 @@ export const GET = async (request, { params }) => {
 
     try {
         await connectToDb();
-        const post = await Post.findById(id).populate('category').populate('user'); // Populating category and user
-
+        // const post = await Post.findById(id).populate('category').populate('user'); // Populating category and user
+        let post;
+        // Check if the id is a valid ObjectId
+        if (mongoose.Types.ObjectId.isValid(id)) {
+            post = await Post.findOne({ _id: id });
+        } else {
+            post = await Post.findOne({ slug: id });
+        }
         if (!post) {
             return NextResponse.json({ message: "Post not found", ok: false }, { status: 404 });
         }

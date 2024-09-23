@@ -1,8 +1,11 @@
+import PostDetails from "@/components/post-details-page/post-details/PostDetails";
 
-const PostDetailsPage = () => {
+const PostDetailsPage = ({ params }) => {
   return (
-    <div>PostDetailsPage</div>
-  )
-}
+    <>
+      <PostDetails postSlug={params?.postSlug} />
+    </>
+  );
+};
 
-export default PostDetailsPage
+export default PostDetailsPage;
