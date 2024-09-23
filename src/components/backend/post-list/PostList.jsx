@@ -9,18 +9,25 @@ import AlertMessage from "@/components/alert-message/AlertMessage";
 import { useEffect, useState } from "react";
 import { useCloudinary } from "@/hooks/useCloudinary";
 import Pagination from "@/components/pagination/Pagination";
+import { useSession } from "next-auth/react";
 
 const PostList = () => {
   const [message, setMessage] = useState({ text: "", isSucceed: true });
   const { removeImage } = useCloudinary();
   const [currentPage, setCurrentPage] = useState(1); // Add state for currentPage
+  const { data: session } = useSession();
+  // console.log(session?.user._id, "session?.user._id");
 
   // Fetch all posts using RTK Query with pagination
   const {
     data: { posts = [], totalPages = 1 } = {},
     isLoading,
     error,
-  } = useGetAllPostsQuery({ page: currentPage }); // Pass currentPage for pagination
+  } = useGetAllPostsQuery({
+    page: currentPage,
+    limit: 10,
+    user: session?.user._id,
+  }); // Pass currentPage for pagination
 
   const [
     deletePost,
@@ -114,11 +121,13 @@ const PostList = () => {
             </table>
           </div>
 
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
+          {totalPages >= 2 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          )}
         </>
       ) : (
         <h2 className="text-2xl text-center">No posts available...</h2>

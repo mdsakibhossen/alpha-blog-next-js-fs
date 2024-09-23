@@ -2,13 +2,17 @@ import { rootApi } from "../apiSlice";
 
 export const postApi = rootApi.injectEndpoints({
     endpoints: (builder) => ({
+        // getAllPosts: builder.query({
+        //     query: ({ page = 1, limit=8, fetchAll = false }) => {
+        //         let queryString = fetchAll
+        //             ? `/posts?fetchAll=true`
+        //             : `/posts?page=${page}&limit=${limit}`;
+        //         return queryString;
+        //     }, 
+        //     providesTags: ["post"],
+        // }),
         getAllPosts: builder.query({
-            query: ({ page = 1, limit=2, fetchAll = false }) => {
-                let queryString = fetchAll
-                    ? `/posts?fetchAll=true`
-                    : `/posts?page=${page}&limit=${limit}`;
-                return queryString;
-            }, 
+            query: ({ page = 1, limit = 0, user = "", category = "", isFeatured = false }) => `/posts?page=${page}&limit=${limit}${user ? ("&user=" + user) : ""}${category ? ("&category=" + category) : ""}${isFeatured ? ("&isFeatured=" + isFeatured) : ""}`,
             providesTags: ["post"],
         }),
         getPost: builder.query({

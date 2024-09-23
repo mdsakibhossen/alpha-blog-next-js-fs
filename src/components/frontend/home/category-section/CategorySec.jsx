@@ -75,21 +75,6 @@ const CategorySec = () => {
                 No Categories available...
               </h2>
             )}
-            {/* <SwiperSlide>
-              <div className="card w-full sm:px-16 flex justify-center items-center">
-                A
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="card w-full sm:px-16 flex justify-center items-center">
-                B
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="card w-full sm:px-16 flex justify-center items-center">
-                C
-              </div>
-            </SwiperSlide> */}
           </Swiper>
         </div>
       </div>
