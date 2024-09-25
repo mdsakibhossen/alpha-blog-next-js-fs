@@ -13,8 +13,8 @@ const Nav = () => {
           <Link href={"/dashboard/profile"}>
             <Image
               src={
-                data?.user?.image?.secure_url
-                  ? data?.user?.image?.secure_url
+                data?.user?.profilePic?.secure_url
+                  ? data?.user?.profilePic?.secure_url
                   : UserImage
               }
               alt={data?.user?.fullName || "Image"}
