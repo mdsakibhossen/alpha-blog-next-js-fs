@@ -84,7 +84,7 @@ const PostList = () => {
   };
 
   return (
-    <div>
+    <div className="p-3">
       {error ? (
         <h2 className="text-xl text-red-400 text-center">
           {error.message || "Something went wrong..."}

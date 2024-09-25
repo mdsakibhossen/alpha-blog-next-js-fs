@@ -1,8 +1,9 @@
+import Profile from "@/components/backend/profile/Profile";
 
 const ProfilePage = () => {
-  return (
-    <div>ProfilePage</div>
-  )
-}
+  return <>
+    <Profile/>
+  </>;
+};
 
-export default ProfilePage
+export default ProfilePage;
