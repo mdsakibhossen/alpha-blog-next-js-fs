@@ -25,8 +25,11 @@ export const GET = async (request) => {
 
         if (user) {
             const dbUser = await User.findById(user); // Fetch user by ID
-            if (!dbUser.isAdmin) {
-                filter.user = dbUser._id; // Apply user filter if valid
+            // if (!dbUser.isAdmin) {
+            //     filter.user = dbUser._id; // Apply user filter if valid
+            // }
+            if (dbUser) {
+                filter.user = dbUser._id; // Filter by the selected user's ID
             }
         }
 
@@ -51,6 +54,60 @@ export const GET = async (request) => {
     } catch (error) {
         return NextResponse.json(
             { message: "Failed to fetch posts", error: error.message },
+            { status: 500 }
+        );
+    }
+};
+
+
+export const POST = async (request) => {
+    await connectToDb();
+
+    try {
+        const { title, slug, description, image, category, user, isFeatured } = await request.json();
+
+        // Validate required fields
+        if (!title || !slug || !description || !category || !user) {
+            return NextResponse.json(
+                { message: "Missing required fields", ok: false },
+                { status: 400 }
+            );
+        }
+
+        // Check if post with the same slug already exists
+        const existingPost = await Post.findOne({ slug });
+        if (existingPost) {
+            return NextResponse.json(
+                { message: "This post with the same slug already exists", ok: false },
+                { status: 409 }
+            );
+        }
+
+        // Create a new post object
+        const newPost = new Post({
+            title,
+            slug,
+            description,
+            image: {
+                secure_url: image.secure_url || "", // Ensure image object structure
+                public_id: image.public_id || "",
+            },
+            category,
+            user,
+            isFeatured: isFeatured || false, // Optional isFeatured flag
+        });
+
+        // Save the new post to the database
+        await newPost.save();
+
+        return NextResponse.json(
+            { post: newPost, message: "Post created successfully", ok: true },
+            { status: 201 }
+        );
+
+    } catch (error) {
+        return NextResponse.json(
+            { message: "Failed to create post", error: error.message, ok: false },
             { status: 500 }
         );
     }

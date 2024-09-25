@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useCloudinary } from "@/hooks/useCloudinary";
 import Pagination from "@/components/pagination/Pagination";
 import { useSession } from "next-auth/react";
+import { useGetAllUsersQuery } from "@/redux/services/user/userApi";
 
 const PostList = () => {
   const [message, setMessage] = useState({ text: "", isSucceed: true });
@@ -17,7 +18,16 @@ const PostList = () => {
   const [currentPage, setCurrentPage] = useState(1); // Add state for currentPage
   const { data: session } = useSession();
   // console.log(session?.user._id, "session?.user._id");
+  const { data: users = [], isLoading: isUsersLoading } = useGetAllUsersQuery();
+  const [user, setUser] = useState("");
+  // const [isAllPost, setIsALlPost] = useState(false);
 
+  useEffect(() => {
+    if (session?.user) {
+      setUser(session?.user._id);
+      // setIsALlPost(session?.user.isAdmin);
+    }
+  }, [session]);
   // Fetch all posts using RTK Query with pagination
   const {
     data: { posts = [], totalPages = 1 } = {},
@@ -26,7 +36,7 @@ const PostList = () => {
   } = useGetAllPostsQuery({
     page: currentPage,
     limit: 10,
-    user: session?.user._id,
+    user: user,
   }); // Pass currentPage for pagination
 
   const [
@@ -95,6 +105,47 @@ const PostList = () => {
         <>
           <div className="table-wrapper max-w-[1000px] mx-auto mt-3 mb-8">
             <AlertMessage message={message} />
+            {session?.user.isAdmin && (
+              <div className="w-full">
+                {/* <select
+                  name=""
+                  id=""
+                  value={user}
+                  onChange={(e) => setUser(e.target.value)}
+                  className="w-1/2 bg-slate-200 px-3 py-2 rounded focus:outline-none"
+                >
+                  <option value={user}>All Posts</option>
+                  {isUsersLoading ? (
+                    <option>Loading Users...</option>
+                  ) : (
+                    users.map((user) => (
+                      <option key={user._id} value={user._id}>
+                        {user.fullName}
+                      </option>
+                    ))
+                  )}
+                </select> */}
+                <select
+                  name=""
+                  id=""
+                  value={user}
+                  onChange={(e) => setUser(e.target.value)}
+                  className="w-1/2 bg-slate-200 px-3 py-2 rounded focus:outline-none"
+                >
+                  <option value="">All Posts</option>{" "}
+                  {/* Show all posts if this option is selected */}
+                  {isUsersLoading ? (
+                    <option>Loading Users...</option>
+                  ) : (
+                    users.map((user) => (
+                      <option key={user._id} value={user._id}>
+                        {user.fullName}
+                      </option>
+                    ))
+                  )}
+                </select>
+              </div>
+            )}
             <table className="border border-collapse text-center w-full mt-3">
               <thead>
                 <tr className="bg-slate-500 text-white uppercase">
