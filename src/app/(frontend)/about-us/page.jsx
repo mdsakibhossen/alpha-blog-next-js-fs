@@ -1,5 +1,11 @@
 import Image from "next/image";
-import AboutUsImage from "../../../../public/images/about.jpg"
+import AboutUsImage from "../../../../public/images/about.jpg";
+
+export const metadata = {
+  title: "About Us | AlphaBlog",
+  description: "About Us Description",
+};
+
 const AboutUsPage = () => {
   return (
     <section className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
@@ -32,6 +38,6 @@ const AboutUsPage = () => {
       </div>
     </section>
   );
-}
+};
 
-export default AboutUsPage
+export default AboutUsPage;
