@@ -12,10 +12,10 @@ const Hero = ({ id }) => {
     <section className="hero min-h-[40vh] py-20 bg-slate-800 text-white">
       <div className="container mx-auto px-3 text-center h-full flex items-center justify-center flex-col gap-5">
         <div className="img-box w-[150px] h-[150px] rounded-full overflow-hidden">
-          {user?.profilePic.secure_url ? (
+          {user?.profilePic?.secure_url ? (
             <Image
-              src={user?.profilePic.secure_url}
-              alt={user?.fullName}
+              src={user?.profilePic?.secure_url}
+              alt={user?.fullName || "Author Image"}
               width={200}
               height={200}
               className="w-full h-full object-cover"
@@ -23,7 +23,7 @@ const Hero = ({ id }) => {
           ) : (
             <Image
               src={UserImage}
-              alt={user?.fullName}
+              alt={user?.fullName || "Author Image"}
               width={200}
               height={200}
               className="w-full h-full object-cover"

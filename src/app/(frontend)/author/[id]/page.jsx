@@ -1,4 +1,5 @@
 import Hero from "@/components/frontend/author/hero/Hero";
+import PostsSec from "@/components/frontend/author/posts-section/PostsSec";
 
 const AuthorPostsPage = ({ params }) => {
   // console.log(params?.catSlug, "Cat");
@@ -6,7 +7,7 @@ const AuthorPostsPage = ({ params }) => {
   return (
     <>
       <Hero id={params?.id} />
-      {/* <PostsSec id={params?.id} /> */}
+      <PostsSec id={params?.id} />
     </>
   );
 };
