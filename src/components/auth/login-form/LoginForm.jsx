@@ -44,12 +44,13 @@ const LoginForm = () => {
 
       if (res.ok) {
         setMessage({
-          // text: data.message,
-          text: "",
+          text: "Login Successfull !!!",
           isSucceed: true,
         });
         setIsLoading(false);
-        router.push(callbackUrl);
+        setTimeout(() => {
+          router.push(callbackUrl);
+        }, 1000);
       } else {
         setMessage({
           text: res?.error,

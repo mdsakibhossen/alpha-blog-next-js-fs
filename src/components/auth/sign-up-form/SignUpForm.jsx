@@ -12,11 +12,11 @@ const SignUpForm = () => {
   const router = useRouter();
   const { status } = useSession();
 
-   useEffect(() => {
-     if (status === "authenticated") {
-       router.push("/dashboard");
-     }
-   }, [status, router]);
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [status, router]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -41,12 +41,14 @@ const SignUpForm = () => {
 
       if (res.ok) {
         setMessage({
-          // text: data.message,
-          text: "",
+          text: "Registration Successfull!!!",
+          // text: "",
           isSucceed: true,
         });
         setIsLoading(false);
-        router.push("/login");
+        setTimeout(() => {
+          router.push("/login");
+        }, 1000);
       } else {
         setMessage({
           text: data.message,
