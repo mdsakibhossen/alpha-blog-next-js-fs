@@ -16,12 +16,12 @@ const Sidebar = () => {
       el.addEventListener("click", () => setSidebarOpened(false));
     });
   }, []);
-  
+
   return (
     <div
       className={`fixed ${
         sidebarOpened ? "translate-x-0" : "translate-x-[-100%]"
-      } h-[85vh] xl:static left-0 transition-all duration-300`}
+      } h-[85vh] xl:static left-0 transition-all duration-300 z-40`}
     >
       <aside
         id="sidebar"
