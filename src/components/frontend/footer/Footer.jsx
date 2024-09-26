@@ -30,15 +30,10 @@ const Footer = () => {
           <div className="links flex flex-col gap-2">
             {categories &&
               categories.map((category) => (
-                <Link key={category?.key} href={`/${category?.slug}`}>
+                <Link key={category?._id} href={`/${category?.slug}`}>
                   {category?.title}
                 </Link>
               ))}
-            {/* <Link href={"/"}>Lifestyle</Link>
-            <Link href={"/"}>Technology</Link>
-            <Link href={"/"}>Travel</Link>
-            <Link href={"/"}>Business</Link>
-            <Link href={"/"}>Sports</Link> */}
           </div>
         </div>
         <div className="col">

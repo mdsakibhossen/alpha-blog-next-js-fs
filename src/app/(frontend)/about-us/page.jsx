@@ -8,7 +8,7 @@ export const metadata = {
 
 const AboutUsPage = () => {
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+    <section className="min-h-screen py-20 flex flex-col items-center justify-center bg-gray-100">
       <div className="container mx-auto px-3 flex flex-col gap-10 lg:flex-row items-center">
         <div className="mt-10 flex-1">
           <Image
