@@ -63,9 +63,9 @@ const UserList = () => {
       ) : isLoading ? (
         <h2 className="text-xl text-center">Loading ...</h2>
       ) : users.length >= 1 ? (
-        <div className="table-wrapper max-w-[1000px] mx-auto mt-3">
+        <div className="table-wrapper max-w-[1000px] mx-auto mt-3 overflow-x-auto pb-2">
           <AlertMessage message={message} />
-          <table className="border border-collapse text-center w-full mt-3">
+          <table className="border border-collapse text-center w-full mt-3 min-w-[600px]">
             <thead>
               <tr className="bg-slate-500 text-white uppercase">
                 <th className="border font-medium p-2">Full Name</th>
