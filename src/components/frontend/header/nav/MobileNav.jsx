@@ -2,11 +2,21 @@
 import LogoutButton from "@/components/logout-button/LogoutButton";
 import NavLink from "@/components/nav-link/NavLink";
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 const MobileNav = ({ isMenuOpened, setIsMenuOpened }) => {
   const { status } = useSession();
+  useEffect(()=>{
+    const mobileNavChildren = document.querySelector("#mobileNav").children;
+    
+    Array.from(mobileNavChildren).forEach(el =>{
+      el.addEventListener("click",()=> setIsMenuOpened(false))
+    })
+    
+  },[])
   return (
     <nav
+    id="mobileNav"
       className={`flex lg:hidden gap-2 items-center absolute w-full top-0 left-0 z-40 bg-gray-100 h-screen flex-col justify-center text-2xl p-3 transition-all duration-300 origin-left ${
         isMenuOpened ? "translate-x-0" : "translate-x-[-100%]"
       }`}
