@@ -13,7 +13,9 @@ const Sidebar = () => {
   useEffect(() => {
     const sidebarChildren = document.querySelector("#sidebar").children;
     Array.from(sidebarChildren).forEach((el) => {
-      el.addEventListener("click", () => setSidebarOpened(false));
+      if (el.tagName !== "BUTTON") {
+        el.addEventListener("click", () => setSidebarOpened(false));
+      }
     });
   }, []);
 
@@ -29,7 +31,7 @@ const Sidebar = () => {
       >
         <button
           onClick={() => setSidebarOpened(!sidebarOpened)}
-          className={`fixed top-[50%] translate-y-[-50%] right-0 translate-x-[60%] bg-slate-200 w-10 h-14 rounded-full flex justify-center items-center text-3xl xl:hidden`}
+          className={`fixed z-[-1] top-[50%] translate-y-[-50%] right-0 translate-x-[60%] bg-slate-200 w-10 h-14 rounded-full flex justify-center items-center text-3xl xl:hidden`}
         >
           <SlArrowRight />
         </button>
