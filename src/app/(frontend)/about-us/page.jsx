@@ -11,7 +11,7 @@ const AboutUsPage = () => {
             className="rounded-lg shadow-lg w-full h-full object-cover"
           />
         </div>
-        <div className="max-w-4xl mx-auto text-center px-4 flex-1">
+        <div className="max-w-4xl mx-auto text-center px-4 flex-1 pb-20">
           <h1 className="text-4xl font-bold text-gray-800 mb-6">About Us</h1>
           <p className="text-lg text-gray-600 mb-4">
             We are a team of passionate developers dedicated to building

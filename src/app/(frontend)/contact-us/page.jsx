@@ -4,7 +4,7 @@ const ContactUsPage = () => {
   return (
     <>
       <section className="min-h-screen flex flex-col items-center justify-center bg-white">
-        <div className="max-w-2xl mx-auto text-center px-4">
+        <div className="max-w-2xl mx-auto text-center px-4 py-10">
           <h1 className="text-4xl font-bold text-gray-800 mb-6">Contact Us</h1>
           <p className="text-lg text-gray-600 mb-4">
             If you have any questions or want to get in touch, feel free to send
