@@ -103,34 +103,16 @@ const PostList = () => {
         <h2 className="text-xl text-center">Loading ...</h2>
       ) : posts.length > 0 ? (
         <>
-          <div className="table-wrapper max-w-[1000px] mx-auto mt-3 mb-8">
+          <div className="max-w-[1000px] mx-auto">
             <AlertMessage message={message} />
             {session?.user.isAdmin && (
               <div className="w-full">
-                {/* <select
-                  name=""
-                  id=""
-                  value={user}
-                  onChange={(e) => setUser(e.target.value)}
-                  className="w-1/2 bg-slate-200 px-3 py-2 rounded focus:outline-none"
-                >
-                  <option value={user}>All Posts</option>
-                  {isUsersLoading ? (
-                    <option>Loading Users...</option>
-                  ) : (
-                    users.map((user) => (
-                      <option key={user._id} value={user._id}>
-                        {user.fullName}
-                      </option>
-                    ))
-                  )}
-                </select> */}
                 <select
                   name=""
                   id=""
                   value={user}
                   onChange={(e) => setUser(e.target.value)}
-                  className="w-1/2 bg-slate-200 px-3 py-2 rounded focus:outline-none"
+                  className="w-full lg:w-1/2 bg-slate-200 px-3 py-2 rounded focus:outline-none"
                 >
                   <option value="">All Posts</option>{" "}
                   {/* Show all posts if this option is selected */}
@@ -146,7 +128,9 @@ const PostList = () => {
                 </select>
               </div>
             )}
-            <table className="border border-collapse text-center w-full mt-3">
+          </div>
+          <div className="table-wrapper max-w-[1000px] mx-auto mt-3 mb-8 overflow-x-auto pb-2">
+            <table className="border border-collapse text-center w-full mt-3 min-w-[1000px]">
               <thead>
                 <tr className="bg-slate-500 text-white uppercase">
                   <th className="border font-medium p-2">Title</th>
