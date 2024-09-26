@@ -1,10 +1,20 @@
 import { useGetCategoryQuery } from "@/redux/services/category/categoryApi";
+import { useGetUserQuery } from "@/redux/services/user/userApi";
 import Image from "next/image";
 import Link from "next/link";
+import AuthorBox from "./author-box/AuthorBox";
+import { getDate } from "@/utils/getDate";
 
 const PostCard = ({ post }) => {
-  const { image, title, description, category: catId, slug: postSlug } = post;
+  const {
+    image,
+    title,
+    description,
+    category: catId,
+    slug: postSlug,
+  } = post;
   const { data: { category } = {} } = useGetCategoryQuery(catId);
+ 
   // console.log(category, "Category Data");
 
   return (
@@ -53,6 +63,10 @@ const PostCard = ({ post }) => {
             ? `${description.slice(0, 200)}...`
             : description}
         </p>
+        <div className="mt-3 flex justify-between items-center text-slate-400">
+          {post?.user && <AuthorBox userId={post?.user} />}
+          <p>{getDate(post?.createdAt)}</p>
+        </div>
       </div>
     </div>
   );
