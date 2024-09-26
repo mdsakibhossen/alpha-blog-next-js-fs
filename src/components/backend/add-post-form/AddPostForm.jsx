@@ -62,13 +62,6 @@ const AddPostForm = () => {
     dispatch(setPost({ property: e.target.name, value: e.target.value }));
   };
 
-  //   const handleCategoryChange = (e) => {
-  //     dispatch(setPost({ property: "category", value: e.target.value }));
-  //   };
-
-  // const handleImageUpload = (e) => {
-  //   uploadImage(e.target.files[0]);
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -108,7 +101,7 @@ const AddPostForm = () => {
             value={title}
             onChange={handleChange}
             placeholder="Title"
-            className="w-full border-2 border-gray-300 rounded p-2"
+            className="w-full border-2 border-gray-300 rounded p-2 focus:outline-green-400"
           />
         </div>
 
@@ -121,7 +114,7 @@ const AddPostForm = () => {
             value={slug}
             onChange={handleChange}
             placeholder="Slug"
-            className="w-full border-2 border-gray-300 rounded p-2"
+            className="w-full border-2 border-gray-300 rounded p-2 focus:outline-green-400"
           />
         </div>
 
@@ -134,7 +127,7 @@ const AddPostForm = () => {
             onChange={handleChange}
             placeholder="Description"
             rows="4"
-            className="w-full border-2 border-gray-300 rounded p-2"
+            className="w-full border-2 border-gray-300 rounded p-2 focus:outline-green-400"
           />
         </div>
 
@@ -145,7 +138,7 @@ const AddPostForm = () => {
             name="category"
             value={category}
             onChange={handleChange}
-            className="w-full border-2 border-gray-300 rounded p-2"
+            className="w-full border-2 border-gray-300 rounded p-2 focus:outline-green-400"
           >
             <option value="">Select a category</option>
             {isCategoriesLoading ? (
