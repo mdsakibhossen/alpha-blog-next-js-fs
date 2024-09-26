@@ -1,5 +1,8 @@
 import UserList from "@/components/backend/user-list/UserList";
-
+export const metadata = {
+  title: "Users | AlphaBlog",
+  description: "Users Description",
+};
 const UserListPage = () => {
   return (
     <section className="w-full">
@@ -11,6 +14,6 @@ const UserListPage = () => {
       </div>
     </section>
   );
-}
+};
 
-export default UserListPage
+export default UserListPage;
