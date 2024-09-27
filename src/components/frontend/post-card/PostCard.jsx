@@ -18,7 +18,7 @@ const PostCard = ({ post }) => {
   // console.log(category, "Category Data");
 
   return (
-    <div className="post-card rounded overflow-hidden shadow max-w-[500px]">
+    <div className="post-card rounded overflow-hidden shadow max-w-[600px]">
       <div className="img-box w-auto h-[250px]">
         <Link
           href={

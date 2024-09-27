@@ -31,7 +31,7 @@ const CardWrapper = () => {
   return (
     <>
       {categoriesLoading || usersLoading || postsLoading ? (
-        <div>Loading...</div>
+        <div className="text-center mt-5">Loading...</div>
       ) : categoriesError || usersError || postsError ? (
         <div>
           Error:{" "}
