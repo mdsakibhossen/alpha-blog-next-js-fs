@@ -55,11 +55,13 @@ const AllPostSec = () => {
         )}
 
         {totalPages >= 2 && (
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
+          <div className="mt-10">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          </div>
         )}
       </div>
     </section>

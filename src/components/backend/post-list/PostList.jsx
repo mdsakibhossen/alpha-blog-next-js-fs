@@ -23,9 +23,11 @@ const PostList = () => {
   // const [isAllPost, setIsALlPost] = useState(false);
 
   useEffect(() => {
-    if (session?.user) {
-      setUser(session?.user._id);
+    if (session?.user?.isAdmin) {
+      setUser("");
       // setIsALlPost(session?.user.isAdmin);
+    } else {
+      setUser(session?.user._id);
     }
   }, [session]);
   // Fetch all posts using RTK Query with pagination
@@ -101,7 +103,7 @@ const PostList = () => {
         </h2>
       ) : isLoading ? (
         <h2 className="text-xl text-center">Loading ...</h2>
-      ) : posts.length > 0 ? (
+      ) : (
         <>
           <div className="max-w-[1000px] mx-auto">
             <AlertMessage message={message} />
@@ -129,43 +131,47 @@ const PostList = () => {
               </div>
             )}
           </div>
-          <div className="table-wrapper max-w-[1000px] mx-auto mt-3 mb-8 overflow-x-auto pb-2">
-            <table className="border border-collapse text-center w-full mt-3 min-w-[1000px]">
-              <thead>
-                <tr className="bg-slate-500 text-white uppercase">
-                  <th className="border font-medium p-2">Title</th>
-                  <th className="border font-medium p-2">Slug</th>
-                  <th className="border font-medium p-2">Category</th>
-                  <th className="border font-medium p-2">Description</th>
-                  <th className="border font-medium p-2">Image</th>
-                  <th className="border font-medium p-2">Is Featured</th>
-                  <th className="border font-medium p-2" colSpan={2}>
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {posts?.map((post) => (
-                  <PostItem
-                    key={post._id}
-                    post={post}
-                    handleDeletePost={handleDeletePost}
-                  />
-                ))}
-              </tbody>
-            </table>
-          </div>
+          {posts.length > 0 ? (
+            <>
+              <div className="table-wrapper max-w-[1000px] mx-auto mt-3 mb-8 overflow-x-auto pb-2">
+                <table className="border border-collapse text-center w-full mt-3 min-w-[1000px]">
+                  <thead>
+                    <tr className="bg-slate-500 text-white uppercase">
+                      <th className="border font-medium p-2">Title</th>
+                      <th className="border font-medium p-2">Slug</th>
+                      <th className="border font-medium p-2">Category</th>
+                      <th className="border font-medium p-2">Description</th>
+                      <th className="border font-medium p-2">Image</th>
+                      <th className="border font-medium p-2">Is Featured</th>
+                      <th className="border font-medium p-2" colSpan={2}>
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {posts?.map((post) => (
+                      <PostItem
+                        key={post._id}
+                        post={post}
+                        handleDeletePost={handleDeletePost}
+                      />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
-          {totalPages >= 2 && (
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
+              {totalPages >= 2 && (
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                />
+              )}
+            </>
+          ) : (
+            <h2 className="text-2xl text-center">No posts available...</h2>
           )}
         </>
-      ) : (
-        <h2 className="text-2xl text-center">No posts available...</h2>
       )}
     </div>
   );
