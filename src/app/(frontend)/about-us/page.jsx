@@ -31,8 +31,8 @@ const AboutUsPage = () => {
             each of our clients.
           </p>
           <p className="text-lg text-gray-600">
-            Whether you're looking to build a brand new website or improve your
-            existing one, we're here to help you every step of the way.
+            Whether you&apos;re looking to build a brand new website or improve your
+            existing one, we&apos;re here to help you every step of the way.
           </p>
         </div>
       </div>

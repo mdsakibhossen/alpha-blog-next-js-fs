@@ -12,7 +12,7 @@ const LoginPage = () => {
         <div className="heading flex flex-col justify-center items-center gap-2 mb-5">
           <h1 className="text-3xl">Login</h1>
           <p className="text-gray-500 flex gap-1">
-            <span>Don't have an account?</span>
+            <span>Don&apos;t have an account?</span>
             <Link
               href={"/sign-up"}
               className="underline text-gray-800 hover:text-green-400"
