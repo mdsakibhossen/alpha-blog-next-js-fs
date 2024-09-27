@@ -23,7 +23,7 @@ const Sidebar = () => {
     <div
       className={`fixed ${
         sidebarOpened ? "translate-x-0" : "translate-x-[-100%]"
-      } h-[85vh] xl:static left-0 transition-all duration-300 z-40`}
+      } h-[85vh] xl:translate-x-0 xl:static left-0 transition-all duration-300 z-40`}
     >
       <aside
         id="sidebar"
