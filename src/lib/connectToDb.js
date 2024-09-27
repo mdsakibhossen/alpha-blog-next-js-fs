@@ -18,7 +18,7 @@ export const connectToDb = async () => {
 
     try {
         await mongoose.connect(MONGO_URI, {
-            dbName: "Blog_01_DB",
+            dbName: "AlphaBlog_DB",
         });
         // console.log("Connected Successfully");
     } catch (error) {
