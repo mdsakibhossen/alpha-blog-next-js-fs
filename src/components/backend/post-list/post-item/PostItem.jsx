@@ -31,10 +31,14 @@ const PostItem = ({ post, handleDeletePost }) => {
   return (
     <tr className="transition-all duration-300 hover:even:bg-slate-200">
       {/* Title */}
-      <td className="border p-2 text-center">{title}</td>
+      <td className="border p-2 text-center">
+        {title.length > 30 ? `${title.slice(0, 30)}...` : title}
+      </td>
 
       {/* Slug */}
-      <td className="border p-2 text-center">{slug}</td>
+      <td className="border p-2 text-center">
+        {slug.length > 30 ? `${slug.slice(0, 30)}...` : slug}
+      </td>
 
       {/* Category Title */}
       <td className="border p-2 text-center">
@@ -43,7 +47,9 @@ const PostItem = ({ post, handleDeletePost }) => {
 
       {/* Description */}
       <td className="border p-2 text-center">
-        {description || "No description"}
+        {description.length > 50
+          ? `${description.slice(0, 50)}...`
+          : description}
       </td>
 
       {/* Featured Image */}

@@ -6,20 +6,14 @@ import AuthorBox from "./author-box/AuthorBox";
 import { getDate } from "@/utils/getDate";
 
 const PostCard = ({ post }) => {
-  const {
-    image,
-    title,
-    description,
-    category: catId,
-    slug: postSlug,
-  } = post;
+  const { image, title, description, category: catId, slug: postSlug } = post;
   const { data: { category } = {} } = useGetCategoryQuery(catId);
- 
+
   // console.log(category, "Category Data");
 
   return (
-    <div className="post-card rounded overflow-hidden shadow max-w-[600px]">
-      <div className="img-box w-auto h-[250px]">
+    <div className="post-card rounded overflow-hidden shadow max-w-[600px] bg-gray-50">
+      <div className="img-box w-full h-[250px]">
         <Link
           href={
             category?.slug && postSlug ? `/${category.slug}/${postSlug}` : "#"
@@ -35,7 +29,7 @@ const PostCard = ({ post }) => {
           />
         </Link>
       </div>
-      <div className="info p-5 bg-gray-50">
+      <div className="info p-5 bg-gray-50 h-full">
         {category?.title && category?.slug && (
           <div className="category my-3">
             <Link
@@ -48,22 +42,28 @@ const PostCard = ({ post }) => {
           </div>
         )}
 
-        <h3 className="text-lg font-semibold uppercase mt-5">
+        <h3 className="text-lg font-semibold uppercase mt-5 mb-2">
           <Link
             href={
               category?.slug && postSlug ? `/${category.slug}/${postSlug}` : "#"
             }
           >
-            {title.length > 100 ? `${title.slice(0, 100)}...` : title}
+            {title.length > 40 ? `${title.slice(0, 40)}...` : title}
           </Link>
         </h3>
         {/* TODO: User and Date will be added here */}
         <p className="text-slate-500">
-          {description.length > 200
-            ? `${description.slice(0, 200)}...`
-            : description}
+          <Link
+            href={
+              category?.slug && postSlug ? `/${category.slug}/${postSlug}` : "#"
+            }
+          >
+            {description.length > 120
+              ? `${description.slice(0, 120)}...`
+              : description}
+          </Link>
         </p>
-        <div className="mt-3 flex justify-between items-center text-slate-400">
+        <div className="mt-5 flex justify-between items-center text-slate-400">
           {post?.user && <AuthorBox userId={post?.user} />}
           <p>{getDate(post?.createdAt)}</p>
         </div>
