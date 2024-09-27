@@ -41,6 +41,7 @@ const AddPostForm = () => {
     }
   };
   useEffect(() => {
+    dispatch(resetPost());
     if (isAddSuccess) {
       setMessage({
         text: addMessage?.message || "Post added successfully.",
@@ -61,7 +62,6 @@ const AddPostForm = () => {
   const handleChange = (e) => {
     dispatch(setPost({ property: e.target.name, value: e.target.value }));
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -17,8 +17,12 @@ const categorySlice = createSlice({
                 state.slug = value.toLowerCase().replaceAll(" ", "-");
             }
         },
+        resetCategory(state) {
+            state.title = "";
+            state.slug = "";
+        }
     },
 });
 
-export const { setCategory } = categorySlice.actions;
+export const { setCategory,resetCategory } = categorySlice.actions;
 export const categoryReducer = categorySlice.reducer;

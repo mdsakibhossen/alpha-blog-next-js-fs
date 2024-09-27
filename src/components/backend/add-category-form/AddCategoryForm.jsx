@@ -1,7 +1,7 @@
 "use client";
 import AlertMessage from "@/components/alert-message/AlertMessage";
 import { useCloudinary } from "@/hooks/useCloudinary";
-import { setCategory } from "@/redux/features/category/categorySlice";
+import { resetCategory, setCategory } from "@/redux/features/category/categorySlice";
 import { useAddCategoryMutation } from "@/redux/services/category/categoryApi";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -36,6 +36,7 @@ const AddCategoryForm = () => {
 
   // Handle messages based on RTK Query states
   useEffect(() => {
+    dispatch(resetCategory());
     if (isAddSuccess) {
       setMessage({
         text: addMessage?.message || "Successfully Added...",
@@ -43,6 +44,7 @@ const AddCategoryForm = () => {
       });
       // router.push("/admin/categories");
       setTimeout(() => {
+        dispatch(resetCategory())
         router.push("/admin/categories");
       }, 1000); // A slight delay before navigating
     } else if (isAddError) {
