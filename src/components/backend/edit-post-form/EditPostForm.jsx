@@ -28,19 +28,18 @@ const EditPostForm = ({ id }) => {
 
   useEffect(() => {
     if (data?.post) {
-      dispatch(setPost({ property: "title", value: data.post.title }));
-      dispatch(setPost({ property: "slug", value: data.post.slug }));
+      dispatch(setPost({ property: "title", value: data?.post.title }));
+      dispatch(setPost({ property: "slug", value: data?.post.slug }));
       dispatch(
-        setPost({ property: "description", value: data.post.description })
+        setPost({ property: "description", value: data?.post.description })
       );
-      dispatch(setPost({ property: "category", value: data.post.category._id }));
+      dispatch(setPost({ property: "category", value: data?.post.category }));
       dispatch(
-        setPost({ property: "isFeatured", value: data.post.isFeatured })
+        setPost({ property: "isFeatured", value: data?.post.isFeatured })
       );
-      setImage(data.post.image);
+      setImage(data?.post.image);
     }
   }, [data, dispatch]);
-  
 
   const [
     editPost,
