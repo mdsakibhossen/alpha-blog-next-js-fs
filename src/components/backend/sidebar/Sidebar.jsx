@@ -8,7 +8,7 @@ import { SlArrowRight } from "react-icons/sl";
 
 const Sidebar = () => {
   const { data } = useSession();
-  const [sidebarOpened, setSidebarOpened] = useState(true);
+  const [sidebarOpened, setSidebarOpened] = useState(false);
 
   useEffect(() => {
     const sidebarChildren = document.querySelector("#sidebar").children;
@@ -23,7 +23,7 @@ const Sidebar = () => {
     <div
       className={`fixed ${
         sidebarOpened ? "translate-x-0" : "translate-x-[-100%]"
-      } h-[85vh] xl:translate-x-0 xl:static left-0 transition-all duration-300 z-40`}
+      } h-[90vh] xl:translate-x-0 xl:static left-0 transition-all duration-300 z-40`}
     >
       <aside
         id="sidebar"
@@ -54,7 +54,7 @@ const Sidebar = () => {
         <NavLink href={"/dashboard/posts"} isHorizontal={false}>
           Posts
         </NavLink>
-        <div className="btn-box text-center mt-auto">
+        <div className="btn-box text-center mt-auto pb-5">
           <LogoutButton />
         </div>
       </aside>
